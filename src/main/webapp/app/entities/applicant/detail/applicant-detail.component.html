@@ -83,14 +83,159 @@
           </div>
         </dd>
       </dl>
+    </div>
+  </div>
+</div>
+<div class="row" style="margin-bottom: 1%">
+  <div *ngIf="applicant" class="col-12">
+    <div class="card">
+      <div class="card-horizontal">
+        <div class="img-square-wrapper">
+          <img class="" src="http://via.placeholder.com/300x180" alt="Card image cap" />
+        </div>
+        <div class="card-body">
+          <h4 class="card-title">{{ applicant.surname }} - Personal Details</h4>
+          <hr />
+          <div class="row">
+            <div class="col-6">
+              <div class="row">
+                <div class="col-sm-4">Name</div>
+                <div class="col-sm-8">{{ applicant.otherNames }}</div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">Gender</div>
+                <div class="col-sm-8">{{ applicant.gender }}</div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">Date Of Birth</div>
+                <div class="col-sm-8">{{ applicant.dateOfBirth | formatMediumDate }}</div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">Id Number</div>
+                <div class="col-sm-8">{{ applicant.idNumber }}</div>
+              </div>
+            </div>
 
-      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
-      </button>
+            <div class="col-6">
+              <div class="row">
+                <div class="col-sm-4">Chnaged Name</div>
+                <div class="col-sm-8">{{ applicant.changedName }}</div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">Maiden Name</div>
+                <div class="col-sm-8">{{ applicant.maidenName }}</div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">Birth Entry Number</div>
+                <div class="col-sm-8">{{ applicant.birthEntryNumber }}</div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">Marital Status</div>
+                <div class="col-sm-8">{{ applicant.maritalStatus }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+        </button>
 
-      <button type="button" [routerLink]="['/applicant', applicant.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
-      </button>
+        <button type="button" [routerLink]="['/applicant', applicant.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-3">
+    <div class="card">
+      <div class="card-header">Featured</div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Cras justo odio</li>
+        <li class="list-group-item">Dapibus ac facilisis in</li>
+        <li class="list-group-item">Vestibulum at eros</li>
+      </ul>
+    </div>
+  </div>
+  <div class="col-9">
+    <div class="row">
+      <div *ngIf="marriageDetails" class="col-6">
+        <div class="card">
+          <div class="card-header">Marriage Details</div>
+          <div class="card-body">
+            <h5 class="card-title">{{ marriageDetails.spouseFullName }}</h5>
+            <hr />
+            <div class="row">
+              <div class="col-6">
+                <div class="row">
+                  <div class="col-sm-4">Previous Spouses</div>
+                  <div class="col-sm-8">{{ marriageDetails.previousSppouses }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-4">Place Of Marriage</div>
+                  <div class="col-sm-8">{{ marriageDetails.dateOfMarriage | formatMediumDate }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-4">Date Of Birth</div>
+                  <div class="col-sm-8">{{ marriageDetails.placeOfMarriage }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-4">Spousal Place Of Birth</div>
+                  <div class="col-sm-8">{{ marriageDetails.spousePlaceOfBirth }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-4">Country Of Marriage</div>
+                  <div class="col-sm-8">{{ marriageDetails.countryOfMarriage }}</div>
+                </div>
+              </div>
+
+              <div class="col-6">
+                <div class="row">
+                  <div class="col-sm-4">Spouse Country of Birth</div>
+                  <div class="col-sm-8">{{ marriageDetails.spouseCountryOfBirth }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-4">Marriage Number</div>
+                  <div class="col-sm-8">{{ marriageDetails.marriageNumber }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-4">Married Before</div>
+                  <div class="col-sm-8">{{ marriageDetails.marriedBefore }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-4">Marriage Order</div>
+                  <div class="col-sm-8">{{ marriageDetails.marriageOrder }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-4">Marriage Order</div>
+                  <div class="col-sm-8">{{ marriageDetails.devorceOrder }}</div>
+                </div>
+              </div>
+            </div>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <div *ngIf="nextOfKeen" class="card">
+          <div class="card-header">Next of Keen</div>
+          <div class="card-body">
+            <h5 class="card-title">{{ nextOfKeen.fullName }}</h5>
+            <div class="row">
+              <div class="col-6">
+                <div class="row">
+                  <div class="col-sm-4">Relationship To Applicant</div>
+                  <div class="col-sm-8">{{ nextOfKeen.relationshipToApplicant }}</div>
+                </div>
+              </div>
+            </div>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -97,6 +97,10 @@ public class ApplicantResource {
         }
 
         ApplicantDTO result = applicantService.save(applicantDTO);
+
+        /**
+         * Finding other details
+         */
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, applicantDTO.getId().toString()))
@@ -172,6 +176,7 @@ public class ApplicantResource {
     public ResponseEntity<ApplicantDTO> getApplicant(@PathVariable Long id) {
         log.debug("REST request to get Applicant : {}", id);
         Optional<ApplicantDTO> applicantDTO = applicantService.findOne(id);
+        log.debug("Found Applicant : {}", applicantDTO);
         return ResponseUtil.wrapOrNotFound(applicantDTO);
     }
 
