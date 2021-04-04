@@ -41,6 +41,7 @@
     "packageFolder": "com/afrikatek/documentsservice",
     "jwtSecretKey": "M2E5OTMyNjEzMmY3NmJiNDgwOTE4MzBiODc0YzQxYmRjZjYxOTRkNmZmZjRjNzA2NWM0NWQyYTk5YjBhODVlZGQzYzNiZmI4OGEzYzMwMTA5ODNjOWFmMGQ5N2YxZjYyMjUxZDk4M2ZlMGU3MjMwNjA1Y2UzYjdiN2UzYzQ0ZDU=",
     "clientPackageManager": "npm",
-    "languages": ["en", "fr"]
+    "languages": ["en", "fr"],
+    "entities": []
   }
 }
