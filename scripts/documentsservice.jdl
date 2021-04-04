@@ -1,0 +1,138 @@
+/**
+ * not an ignored comment
+ */
+entity Address {
+    streetAddress String required,
+  postalCode String required,
+  city String required,
+  stateProvince String,
+  placeOfBirth String required,
+  telephone String required
+}
+entity Applicant {
+    surname String required,
+  otherNames String required,
+  maidenName String required,
+  changedName Boolean required,
+  gender Gender,
+  maritalStatus MaritalStatus,
+  dateOfBirth LocalDate required,
+  idNumber String required,
+  birthEntryNumber String required
+}
+entity DemographicDetails {
+    eyeColor EyeColor required,
+  hairColor HairColor required,
+  visibleMarks String required,
+  profession String required,
+  placeOfBirth String required,
+  image ImageBlob
+}
+entity MarriageDetails {
+    dateOfMarriage LocalDate required,
+  spouseFullName String required,
+  placeOfMarriage String required,
+  spousePlaceOfBirth String required,
+  countryOfMarriage String required,
+  spouseCountryOfBirth String required,
+  marriageNumber String required,
+  marriedBefore Boolean required,
+  marriageOrder String required,
+  devorceOrder String required,
+  previousSppouses String required
+}
+entity NextOfKeen {
+    fullName String required,
+  relationshipToApplicant String required
+}
+entity Guardian {
+    fullName String required,
+    idNumber String required,
+    relationshipToApplicant String required
+}
+entity Passport {
+    passportNumber String required,
+    issuedAt String required,
+    issuedDate Instant required,
+    lossDescription String required
+}
+entity Declaration {
+    citizen CitizenOptions required,
+    passport PassportOptions required,
+    foreignPassport ForeignDocumentsOptions required,
+    passportNumber String required,
+    renouncedCitizenship ForeignDocumentsOptions required,
+    passportSurrendered ForeignDocumentsOptions required,
+    foreignPassportNumber String required
+}
+enum CitizenOptions {
+    BIRTH, DESCENT, REGISTRATION
+}
+enum PassportOptions {
+    NO, YES_VALID, YES_FULL, YES_LOST
+}
+enum ForeignDocumentsOptions {
+    NA, NO, YES
+}
+entity Appointment {
+    dateOfAppointment Instant required,
+    available Boolean required,
+    appointmentType AppointmentType,
+    maxAppointments Integer required min(0) max(1000)
+}
+entity AppointmentSettings {
+    maxOrdinaryAppointments Integer required min(0) max(1000),
+    maxEmergencyAppointments Integer required min(0) max(1000),
+    startingWorkTime Integer required min(0) max(23),
+    endingWorkTime Integer required min(0) max(23)
+}
+entity AppointmentSlot {
+    timeOfAppointment Instant required,
+    available Boolean required,
+    maxAppointments Integer required min(1) max(100)
+}
+entity Country {
+    countryName String required,
+    countryCode String required,
+    callingCode String required,
+    subRegion String,
+    region String,
+    population Integer,
+    timeZone String maxlength(15),
+    numericCode Integer
+}
+entity Holiday {
+    name String required,
+    month HolidayMonth required,
+    day Integer required min(1) max(31)
+}
+enum Gender {
+    MALE, FEMALE
+}
+enum MaritalStatus {
+    MARRIED, SINGLE, NEVER_MARRIED, DIVORCED
+}
+enum EyeColor {
+    BROWN, BLACK, BLUE
+}
+enum HairColor {
+    BLACK, BROWN, BLONDE, RED, WHITE
+}
+enum AppointmentType {
+    ORDINARY, EMERGENCY
+}
+enum HolidayMonth {
+    JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER
+}
+relationship OneToOne {
+    Address{country(countryName) required} to Country , MarriageDetails{applicant(surname) required} to Applicant{marriageDetails(spouseFullName)} , NextOfKeen{applicant(surname) required} to Applicant{nextOfKeen(fullName)} , NextOfKeen{address(city) required} to Address{nextOfKeen(fullName)} , Applicant{democraphicDetails(profession) required} to DemographicDetails{applicant(surname)} , Applicant{declaration(passportNumber)} to Declaration{applicant(surname)} , Applicant{guardian(fullName)} to Guardian{applicant(surname)}
+}
+relationship OneToMany {
+    Applicant{addresses} to Address{applicant(surname)} , Applicant{countryOfBirth} to Country{applicant(surname)} , AppointmentSlot{applicants} to Applicant{appointmentSlot(timeOfAppointment)} , Appointment{appointmentSlot} to AppointmentSlot{appointment}
+}
+relationship ManyToOne {
+    Applicant{user(login) required} to User
+}
+dto * with mapstruct
+paginate * with pagination
+service * with serviceClass
