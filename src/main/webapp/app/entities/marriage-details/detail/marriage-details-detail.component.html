@@ -1,6 +1,28 @@
 <div class="row justify-content-center">
+  <div class="col-4">
+    <div *ngIf="applicant" class="shadow p-3 mb-5 bg-white rounded">
+      <h2 data-cy="marriageDetailsDetailsHeading"><span>Applicant Details</span></h2>
+      <hr />
+      <dt><span>Applicant Surname</span></dt>
+      <dd>
+        <span>{{ applicant?.surname }}</span>
+      </dd>
+      <dt><span>Date Of Marriage</span></dt>
+      <dd>
+        <span>{{ applicant?.otherNames }}</span>
+      </dd>
+      <dt><span>Applicant Gender</span></dt>
+      <dd>
+        <span>{{ applicant?.gender }}</span>
+      </dd>
+      <dt><span>Applicant Id Number</span></dt>
+      <dd>
+        <span>{{ applicant?.idNumber }}</span>
+      </dd>
+    </div>
+  </div>
   <div class="col-8">
-    <div *ngIf="marriageDetails">
+    <div *ngIf="marriageDetails" class="shadow p-3 mb-5 bg-white rounded">
       <h2 data-cy="marriageDetailsDetailsHeading"><span>Marriage Details</span></h2>
 
       <hr />

@@ -32,38 +32,22 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="dateOfMarriage"><span>Date Of Marriage</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col" jhiSortBy="spouseFullName"><span>Spouse Full Name</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="dateOfMarriage"><span>Date Of Marriage</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col" jhiSortBy="placeOfMarriage"><span>Place Of Marriage</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="spousePlaceOfBirth"><span>Spouse Place Of Birth</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="countryOfMarriage"><span>Country Of Marriage</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="spouseCountryOfBirth"><span>Spouse Country Of Birth</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col" jhiSortBy="marriageNumber"><span>Marriage Number</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="marriedBefore"><span>Married Before</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="marriageOrder"><span>Marriage Order</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col" jhiSortBy="devorceOrder"><span>Devorce Order</span> <fa-icon icon="sort"></fa-icon></th>
-          <th scope="col" jhiSortBy="previousSppouses"><span>Previous Sppouses</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col" jhiSortBy="applicant.surname"><span>Applicant</span> <fa-icon icon="sort"></fa-icon></th>
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let marriageDetails of marriageDetails; trackBy: trackId" data-cy="entityTable">
-          <td>
-            <a [routerLink]="['/marriage-details', marriageDetails.id, 'view']">{{ marriageDetails.id }}</a>
-          </td>
-          <td>{{ marriageDetails.dateOfMarriage | formatMediumDate }}</td>
           <td>{{ marriageDetails.spouseFullName }}</td>
+          <td>{{ marriageDetails.dateOfMarriage | formatMediumDate }}</td>
           <td>{{ marriageDetails.placeOfMarriage }}</td>
-          <td>{{ marriageDetails.spousePlaceOfBirth }}</td>
-          <td>{{ marriageDetails.countryOfMarriage }}</td>
-          <td>{{ marriageDetails.spouseCountryOfBirth }}</td>
           <td>{{ marriageDetails.marriageNumber }}</td>
-          <td>{{ marriageDetails.marriedBefore }}</td>
-          <td>{{ marriageDetails.marriageOrder }}</td>
           <td>{{ marriageDetails.devorceOrder }}</td>
-          <td>{{ marriageDetails.previousSppouses }}</td>
           <td>
             <div *ngIf="marriageDetails.applicant">
               <a [routerLink]="['/applicant', marriageDetails.applicant?.id, 'view']">{{ marriageDetails.applicant?.surname }}</a>

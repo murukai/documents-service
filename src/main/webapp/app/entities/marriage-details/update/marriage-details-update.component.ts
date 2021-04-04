@@ -9,15 +9,19 @@ import { IMarriageDetails, MarriageDetails } from '../marriage-details.model';
 import { MarriageDetailsService } from '../service/marriage-details.service';
 import { IApplicant } from 'app/entities/applicant/applicant.model';
 import { ApplicantService } from 'app/entities/applicant/service/applicant.service';
+import { ICountry } from 'app/entities/country/country.model';
+import { CountryService } from 'app/entities/country/service/country.service';
 
 @Component({
   selector: 'jhi-marriage-details-update',
   templateUrl: './marriage-details-update.component.html',
+  styleUrls: ['./marriage-details-update.component.css'],
 })
 export class MarriageDetailsUpdateComponent implements OnInit {
   isSaving = false;
 
   applicantsCollection: IApplicant[] = [];
+  countries: ICountry[] = [];
 
   editForm = this.fb.group({
     id: [],
@@ -39,7 +43,8 @@ export class MarriageDetailsUpdateComponent implements OnInit {
     protected marriageDetailsService: MarriageDetailsService,
     protected applicantService: ApplicantService,
     protected activatedRoute: ActivatedRoute,
-    protected fb: FormBuilder
+    protected fb: FormBuilder,
+    protected countryService: CountryService
   ) {}
 
   ngOnInit(): void {
@@ -120,6 +125,10 @@ export class MarriageDetailsUpdateComponent implements OnInit {
         )
       )
       .subscribe((applicants: IApplicant[]) => (this.applicantsCollection = applicants));
+    this.countryService
+      .query()
+      .pipe(map((res: HttpResponse<ICountry[]>) => res.body ?? []))
+      .subscribe((countries: ICountry[]) => (this.countries = countries));
   }
 
   protected createFromForm(): IMarriageDetails {
