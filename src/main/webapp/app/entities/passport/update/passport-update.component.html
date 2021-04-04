@@ -1,0 +1,100 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-passport-heading" data-cy="PassportCreateUpdateHeading">Create or edit a Passport</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_passportNumber">Passport Number</label>
+          <input
+            type="text"
+            class="form-control"
+            name="passportNumber"
+            id="field_passportNumber"
+            data-cy="passportNumber"
+            formControlName="passportNumber"
+          />
+          <div
+            *ngIf="
+              editForm.get('passportNumber')!.invalid && (editForm.get('passportNumber')!.dirty || editForm.get('passportNumber')!.touched)
+            "
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('passportNumber')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_issuedAt">Issued At</label>
+          <input type="text" class="form-control" name="issuedAt" id="field_issuedAt" data-cy="issuedAt" formControlName="issuedAt" />
+          <div *ngIf="editForm.get('issuedAt')!.invalid && (editForm.get('issuedAt')!.dirty || editForm.get('issuedAt')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('issuedAt')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_issuedDate">Issued Date</label>
+          <div class="d-flex">
+            <input
+              id="field_issuedDate"
+              data-cy="issuedDate"
+              type="datetime-local"
+              class="form-control"
+              name="issuedDate"
+              formControlName="issuedDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div *ngIf="editForm.get('issuedDate')!.invalid && (editForm.get('issuedDate')!.dirty || editForm.get('issuedDate')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('issuedDate')?.errors?.required"> This field is required. </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('issuedDate')?.errors?.ZonedDateTimelocal">
+              This field should be a date and time.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_lossDescription">Loss Description</label>
+          <input
+            type="text"
+            class="form-control"
+            name="lossDescription"
+            id="field_lossDescription"
+            data-cy="lossDescription"
+            formControlName="lossDescription"
+          />
+          <div
+            *ngIf="
+              editForm.get('lossDescription')!.invalid &&
+              (editForm.get('lossDescription')!.dirty || editForm.get('lossDescription')!.touched)
+            "
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('lossDescription')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

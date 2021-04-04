@@ -1,0 +1,65 @@
+{
+  "name": "Declaration",
+  "fields": [
+    {
+      "fieldName": "citizen",
+      "fieldType": "CitizenOptions",
+      "fieldValues": "BIRTH,DESCENT,REGISTRATION",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "passport",
+      "fieldType": "PassportOptions",
+      "fieldValues": "NO,YES_VALID,YES_FULL,YES_LOST",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "foreignPassport",
+      "fieldType": "ForeignDocumentsOptions",
+      "fieldValues": "NA,NO,YES",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "passportNumber",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "renouncedCitizenship",
+      "fieldType": "ForeignDocumentsOptions",
+      "fieldValues": "NA,NO,YES",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "passportSurrendered",
+      "fieldType": "ForeignDocumentsOptions",
+      "fieldValues": "NA,NO,YES",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "foreignPassportNumber",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "applicant",
+      "otherEntityRelationshipName": "declaration",
+      "relationshipName": "applicant",
+      "otherEntityField": "surname",
+      "ownerSide": false
+    }
+  ],
+  "entityTableName": "declaration",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210404092302"
+}

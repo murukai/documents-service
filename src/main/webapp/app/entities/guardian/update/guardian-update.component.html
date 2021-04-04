@@ -1,0 +1,70 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-guardian-heading" data-cy="GuardianCreateUpdateHeading">Create or edit a Guardian</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_fullName">Full Name</label>
+          <input type="text" class="form-control" name="fullName" id="field_fullName" data-cy="fullName" formControlName="fullName" />
+          <div *ngIf="editForm.get('fullName')!.invalid && (editForm.get('fullName')!.dirty || editForm.get('fullName')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('fullName')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_idNumber">Id Number</label>
+          <input type="text" class="form-control" name="idNumber" id="field_idNumber" data-cy="idNumber" formControlName="idNumber" />
+          <div *ngIf="editForm.get('idNumber')!.invalid && (editForm.get('idNumber')!.dirty || editForm.get('idNumber')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('idNumber')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_relationshipToApplicant">Relationship To Applicant</label>
+          <input
+            type="text"
+            class="form-control"
+            name="relationshipToApplicant"
+            id="field_relationshipToApplicant"
+            data-cy="relationshipToApplicant"
+            formControlName="relationshipToApplicant"
+          />
+          <div
+            *ngIf="
+              editForm.get('relationshipToApplicant')!.invalid &&
+              (editForm.get('relationshipToApplicant')!.dirty || editForm.get('relationshipToApplicant')!.touched)
+            "
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('relationshipToApplicant')?.errors?.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

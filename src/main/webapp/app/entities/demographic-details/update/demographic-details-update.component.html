@@ -1,0 +1,140 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-demographic-details-heading" data-cy="DemographicDetailsCreateUpdateHeading">Create or edit a Demographic Details</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_eyeColor">Eye Color</label>
+          <select class="form-control" name="eyeColor" formControlName="eyeColor" id="field_eyeColor" data-cy="eyeColor">
+            <option [ngValue]="null"></option>
+            <option value="BROWN">BROWN</option>
+            <option value="BLACK">BLACK</option>
+            <option value="BLUE">BLUE</option>
+          </select>
+          <div *ngIf="editForm.get('eyeColor')!.invalid && (editForm.get('eyeColor')!.dirty || editForm.get('eyeColor')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('eyeColor')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_hairColor">Hair Color</label>
+          <select class="form-control" name="hairColor" formControlName="hairColor" id="field_hairColor" data-cy="hairColor">
+            <option [ngValue]="null"></option>
+            <option value="BLACK">BLACK</option>
+            <option value="BROWN">BROWN</option>
+            <option value="BLONDE">BLONDE</option>
+            <option value="RED">RED</option>
+            <option value="WHITE">WHITE</option>
+          </select>
+          <div *ngIf="editForm.get('hairColor')!.invalid && (editForm.get('hairColor')!.dirty || editForm.get('hairColor')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('hairColor')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_visibleMarks">Visible Marks</label>
+          <input
+            type="text"
+            class="form-control"
+            name="visibleMarks"
+            id="field_visibleMarks"
+            data-cy="visibleMarks"
+            formControlName="visibleMarks"
+          />
+          <div
+            *ngIf="editForm.get('visibleMarks')!.invalid && (editForm.get('visibleMarks')!.dirty || editForm.get('visibleMarks')!.touched)"
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('visibleMarks')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_profession">Profession</label>
+          <input
+            type="text"
+            class="form-control"
+            name="profession"
+            id="field_profession"
+            data-cy="profession"
+            formControlName="profession"
+          />
+          <div *ngIf="editForm.get('profession')!.invalid && (editForm.get('profession')!.dirty || editForm.get('profession')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('profession')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_placeOfBirth">Place Of Birth</label>
+          <input
+            type="text"
+            class="form-control"
+            name="placeOfBirth"
+            id="field_placeOfBirth"
+            data-cy="placeOfBirth"
+            formControlName="placeOfBirth"
+          />
+          <div
+            *ngIf="editForm.get('placeOfBirth')!.invalid && (editForm.get('placeOfBirth')!.dirty || editForm.get('placeOfBirth')!.touched)"
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('placeOfBirth')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_image">Image</label>
+          <div>
+            <img
+              [src]="'data:' + editForm.get('imageContentType')!.value + ';base64,' + editForm.get('image')!.value"
+              style="max-height: 100px"
+              *ngIf="editForm.get('image')!.value"
+              alt="demographicDetails image"
+            />
+            <div *ngIf="editForm.get('image')!.value" class="form-text text-danger clearfix">
+              <span class="pull-left">{{ editForm.get('imageContentType')!.value }}, {{ byteSize(editForm.get('image')!.value) }}</span>
+              <button
+                type="button"
+                (click)="clearInputImage('image', 'imageContentType', 'file_image')"
+                class="btn btn-secondary btn-xs pull-right"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input type="file" id="file_image" data-cy="image" (change)="setFileData($event, 'image', true)" accept="image/*" />
+          </div>
+          <input type="hidden" class="form-control" name="image" id="field_image" data-cy="image" formControlName="image" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="imageContentType"
+            id="field_imageContentType"
+            formControlName="imageContentType"
+          />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

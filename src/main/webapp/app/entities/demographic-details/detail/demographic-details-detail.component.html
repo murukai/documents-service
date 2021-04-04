@@ -1,0 +1,61 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="demographicDetails">
+      <h2 data-cy="demographicDetailsDetailsHeading"><span>Demographic Details</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ demographicDetails.id }}</span>
+        </dd>
+        <dt><span>Eye Color</span></dt>
+        <dd>
+          <span>{{ demographicDetails.eyeColor }}</span>
+        </dd>
+        <dt><span>Hair Color</span></dt>
+        <dd>
+          <span>{{ demographicDetails.hairColor }}</span>
+        </dd>
+        <dt><span>Visible Marks</span></dt>
+        <dd>
+          <span>{{ demographicDetails.visibleMarks }}</span>
+        </dd>
+        <dt><span>Profession</span></dt>
+        <dd>
+          <span>{{ demographicDetails.profession }}</span>
+        </dd>
+        <dt><span>Place Of Birth</span></dt>
+        <dd>
+          <span>{{ demographicDetails.placeOfBirth }}</span>
+        </dd>
+        <dt><span>Image</span></dt>
+        <dd>
+          <div *ngIf="demographicDetails.image">
+            <a (click)="openFile(demographicDetails.image, demographicDetails.imageContentType)">
+              <img
+                [src]="'data:' + demographicDetails.imageContentType + ';base64,' + demographicDetails.image"
+                style="max-width: 100%"
+                alt="demographicDetails image"
+              />
+            </a>
+            {{ demographicDetails.imageContentType }}, {{ byteSize(demographicDetails.image) }}
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/demographic-details', demographicDetails.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

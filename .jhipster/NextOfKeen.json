@@ -1,0 +1,45 @@
+{
+  "name": "NextOfKeen",
+  "fields": [
+    {
+      "fieldName": "fullName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "relationshipToApplicant",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "applicant",
+      "otherEntityRelationshipName": "nextOfKeen",
+      "relationshipValidateRules": "required",
+      "relationshipName": "applicant",
+      "otherEntityField": "surname",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "address",
+      "otherEntityRelationshipName": "nextOfKeen",
+      "relationshipValidateRules": "required",
+      "relationshipName": "address",
+      "otherEntityField": "city",
+      "ownerSide": true
+    }
+  ],
+  "entityTableName": "next_of_keen",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210404092259"
+}

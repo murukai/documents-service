@@ -1,0 +1,57 @@
+{
+  "name": "DemographicDetails",
+  "fields": [
+    {
+      "fieldName": "eyeColor",
+      "fieldType": "EyeColor",
+      "fieldValues": "BROWN,BLACK,BLUE",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "hairColor",
+      "fieldType": "HairColor",
+      "fieldValues": "BLACK,BROWN,BLONDE,RED,WHITE",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "visibleMarks",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "profession",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "placeOfBirth",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "image",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-one",
+      "otherEntityName": "applicant",
+      "otherEntityRelationshipName": "democraphicDetails",
+      "relationshipName": "applicant",
+      "otherEntityField": "surname",
+      "ownerSide": false
+    }
+  ],
+  "entityTableName": "demographic_details",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210404092257"
+}

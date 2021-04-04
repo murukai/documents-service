@@ -1,0 +1,40 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="guardian">
+      <h2 data-cy="guardianDetailsHeading"><span>Guardian</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ guardian.id }}</span>
+        </dd>
+        <dt><span>Full Name</span></dt>
+        <dd>
+          <span>{{ guardian.fullName }}</span>
+        </dd>
+        <dt><span>Id Number</span></dt>
+        <dd>
+          <span>{{ guardian.idNumber }}</span>
+        </dd>
+        <dt><span>Relationship To Applicant</span></dt>
+        <dd>
+          <span>{{ guardian.relationshipToApplicant }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/guardian', guardian.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

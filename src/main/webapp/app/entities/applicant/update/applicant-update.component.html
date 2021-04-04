@@ -1,0 +1,265 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-applicant-heading" data-cy="ApplicantCreateUpdateHeading">Create or edit a Applicant</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_surname">Surname</label>
+          <input type="text" class="form-control" name="surname" id="field_surname" data-cy="surname" formControlName="surname" />
+          <div *ngIf="editForm.get('surname')!.invalid && (editForm.get('surname')!.dirty || editForm.get('surname')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('surname')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_otherNames">Other Names</label>
+          <input
+            type="text"
+            class="form-control"
+            name="otherNames"
+            id="field_otherNames"
+            data-cy="otherNames"
+            formControlName="otherNames"
+          />
+          <div *ngIf="editForm.get('otherNames')!.invalid && (editForm.get('otherNames')!.dirty || editForm.get('otherNames')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('otherNames')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_maidenName">Maiden Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="maidenName"
+            id="field_maidenName"
+            data-cy="maidenName"
+            formControlName="maidenName"
+          />
+          <div *ngIf="editForm.get('maidenName')!.invalid && (editForm.get('maidenName')!.dirty || editForm.get('maidenName')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('maidenName')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_changedName">Changed Name</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="changedName"
+            id="field_changedName"
+            data-cy="changedName"
+            formControlName="changedName"
+          />
+          <div *ngIf="editForm.get('changedName')!.invalid && (editForm.get('changedName')!.dirty || editForm.get('changedName')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('changedName')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_gender">Gender</label>
+          <select class="form-control" name="gender" formControlName="gender" id="field_gender" data-cy="gender">
+            <option [ngValue]="null"></option>
+            <option value="MALE">MALE</option>
+            <option value="FEMALE">FEMALE</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_maritalStatus">Marital Status</label>
+          <select
+            class="form-control"
+            name="maritalStatus"
+            formControlName="maritalStatus"
+            id="field_maritalStatus"
+            data-cy="maritalStatus"
+          >
+            <option [ngValue]="null"></option>
+            <option value="MARRIED">MARRIED</option>
+            <option value="SINGLE">SINGLE</option>
+            <option value="NEVER_MARRIED">NEVER_MARRIED</option>
+            <option value="DIVORCED">DIVORCED</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_dateOfBirth">Date Of Birth</label>
+          <div class="input-group">
+            <input
+              id="field_dateOfBirth"
+              data-cy="dateOfBirth"
+              type="text"
+              class="form-control"
+              name="dateOfBirth"
+              ngbDatepicker
+              #dateOfBirthDp="ngbDatepicker"
+              formControlName="dateOfBirth"
+            />
+            <span class="input-group-append">
+              <button type="button" class="btn btn-secondary" (click)="dateOfBirthDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </span>
+          </div>
+          <div *ngIf="editForm.get('dateOfBirth')!.invalid && (editForm.get('dateOfBirth')!.dirty || editForm.get('dateOfBirth')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('dateOfBirth')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_idNumber">Id Number</label>
+          <input type="text" class="form-control" name="idNumber" id="field_idNumber" data-cy="idNumber" formControlName="idNumber" />
+          <div *ngIf="editForm.get('idNumber')!.invalid && (editForm.get('idNumber')!.dirty || editForm.get('idNumber')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('idNumber')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_birthEntryNumber">Birth Entry Number</label>
+          <input
+            type="text"
+            class="form-control"
+            name="birthEntryNumber"
+            id="field_birthEntryNumber"
+            data-cy="birthEntryNumber"
+            formControlName="birthEntryNumber"
+          />
+          <div
+            *ngIf="
+              editForm.get('birthEntryNumber')!.invalid &&
+              (editForm.get('birthEntryNumber')!.dirty || editForm.get('birthEntryNumber')!.touched)
+            "
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('birthEntryNumber')?.errors?.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_democraphicDetails">Democraphic Details</label>
+          <select
+            class="form-control"
+            id="field_democraphicDetails"
+            data-cy="democraphicDetails"
+            name="democraphicDetails"
+            formControlName="democraphicDetails"
+          >
+            <option *ngIf="editForm.get(['democraphicDetails'])!.value == null" [ngValue]="null" selected></option>
+            <option
+              [ngValue]="
+                demographicDetailsOption.id === editForm.get('democraphicDetails')!.value?.id
+                  ? editForm.get('democraphicDetails')!.value
+                  : demographicDetailsOption
+              "
+              *ngFor="let demographicDetailsOption of democraphicDetailsCollection; trackBy: trackDemographicDetailsById"
+            >
+              {{ demographicDetailsOption.profession }}
+            </option>
+          </select>
+        </div>
+        <div
+          *ngIf="
+            editForm.get(['democraphicDetails'])!.invalid &&
+            (editForm.get(['democraphicDetails'])!.dirty || editForm.get(['democraphicDetails'])!.touched)
+          "
+        >
+          <small class="form-text text-danger" *ngIf="editForm.get(['democraphicDetails'])?.errors?.required">
+            This field is required.
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_declaration">Declaration</label>
+          <select class="form-control" id="field_declaration" data-cy="declaration" name="declaration" formControlName="declaration">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                declarationOption.id === editForm.get('declaration')!.value?.id ? editForm.get('declaration')!.value : declarationOption
+              "
+              *ngFor="let declarationOption of declarationsCollection; trackBy: trackDeclarationById"
+            >
+              {{ declarationOption.passportNumber }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_guardian">Guardian</label>
+          <select class="form-control" id="field_guardian" data-cy="guardian" name="guardian" formControlName="guardian">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="guardianOption.id === editForm.get('guardian')!.value?.id ? editForm.get('guardian')!.value : guardianOption"
+              *ngFor="let guardianOption of guardiansCollection; trackBy: trackGuardianById"
+            >
+              {{ guardianOption.fullName }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_user">User</label>
+          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user">
+            <option *ngIf="!editForm.get('user')!.value" [ngValue]="null" selected></option>
+            <option
+              [ngValue]="userOption.id === editForm.get('user')!.value?.id ? editForm.get('user')!.value : userOption"
+              *ngFor="let userOption of usersSharedCollection; trackBy: trackUserById"
+            >
+              {{ userOption.login }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['user'])!.invalid && (editForm.get(['user'])!.dirty || editForm.get(['user'])!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get(['user'])?.errors?.required"> This field is required. </small>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_appointmentSlot">Appointment Slot</label>
+          <select
+            class="form-control"
+            id="field_appointmentSlot"
+            data-cy="appointmentSlot"
+            name="appointmentSlot"
+            formControlName="appointmentSlot"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                appointmentSlotOption.id === editForm.get('appointmentSlot')!.value?.id
+                  ? editForm.get('appointmentSlot')!.value
+                  : appointmentSlotOption
+              "
+              *ngFor="let appointmentSlotOption of appointmentSlotsSharedCollection; trackBy: trackAppointmentSlotById"
+            >
+              {{ appointmentSlotOption.timeOfAppointment }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

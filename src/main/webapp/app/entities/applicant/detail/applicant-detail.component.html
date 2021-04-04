@@ -1,0 +1,96 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="applicant">
+      <h2 data-cy="applicantDetailsHeading"><span>Applicant</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ applicant.id }}</span>
+        </dd>
+        <dt><span>Surname</span></dt>
+        <dd>
+          <span>{{ applicant.surname }}</span>
+        </dd>
+        <dt><span>Other Names</span></dt>
+        <dd>
+          <span>{{ applicant.otherNames }}</span>
+        </dd>
+        <dt><span>Maiden Name</span></dt>
+        <dd>
+          <span>{{ applicant.maidenName }}</span>
+        </dd>
+        <dt><span>Changed Name</span></dt>
+        <dd>
+          <span>{{ applicant.changedName }}</span>
+        </dd>
+        <dt><span>Gender</span></dt>
+        <dd>
+          <span>{{ applicant.gender }}</span>
+        </dd>
+        <dt><span>Marital Status</span></dt>
+        <dd>
+          <span>{{ applicant.maritalStatus }}</span>
+        </dd>
+        <dt><span>Date Of Birth</span></dt>
+        <dd>
+          <span>{{ applicant.dateOfBirth | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Id Number</span></dt>
+        <dd>
+          <span>{{ applicant.idNumber }}</span>
+        </dd>
+        <dt><span>Birth Entry Number</span></dt>
+        <dd>
+          <span>{{ applicant.birthEntryNumber }}</span>
+        </dd>
+        <dt><span>Democraphic Details</span></dt>
+        <dd>
+          <div *ngIf="applicant.democraphicDetails">
+            <a [routerLink]="['/demographic-details', applicant.democraphicDetails?.id, 'view']">{{
+              applicant.democraphicDetails?.profession
+            }}</a>
+          </div>
+        </dd>
+        <dt><span>Declaration</span></dt>
+        <dd>
+          <div *ngIf="applicant.declaration">
+            <a [routerLink]="['/declaration', applicant.declaration?.id, 'view']">{{ applicant.declaration?.passportNumber }}</a>
+          </div>
+        </dd>
+        <dt><span>Guardian</span></dt>
+        <dd>
+          <div *ngIf="applicant.guardian">
+            <a [routerLink]="['/guardian', applicant.guardian?.id, 'view']">{{ applicant.guardian?.fullName }}</a>
+          </div>
+        </dd>
+        <dt><span>User</span></dt>
+        <dd>
+          <span>{{ applicant.user?.login }}</span>
+        </dd>
+        <dt><span>Appointment Slot</span></dt>
+        <dd>
+          <div *ngIf="applicant.appointmentSlot">
+            <a [routerLink]="['/appointment-slot', applicant.appointmentSlot?.id, 'view']">{{
+              applicant.appointmentSlot?.timeOfAppointment
+            }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/applicant', applicant.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

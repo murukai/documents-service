@@ -1,0 +1,176 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-declaration-heading" data-cy="DeclarationCreateUpdateHeading">Create or edit a Declaration</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_citizen">Citizen</label>
+          <select class="form-control" name="citizen" formControlName="citizen" id="field_citizen" data-cy="citizen">
+            <option [ngValue]="null"></option>
+            <option value="BIRTH">BIRTH</option>
+            <option value="DESCENT">DESCENT</option>
+            <option value="REGISTRATION">REGISTRATION</option>
+          </select>
+          <div *ngIf="editForm.get('citizen')!.invalid && (editForm.get('citizen')!.dirty || editForm.get('citizen')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('citizen')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_passport">Passport</label>
+          <select class="form-control" name="passport" formControlName="passport" id="field_passport" data-cy="passport">
+            <option [ngValue]="null"></option>
+            <option value="NO">NO</option>
+            <option value="YES_VALID">YES_VALID</option>
+            <option value="YES_FULL">YES_FULL</option>
+            <option value="YES_LOST">YES_LOST</option>
+          </select>
+          <div *ngIf="editForm.get('passport')!.invalid && (editForm.get('passport')!.dirty || editForm.get('passport')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('passport')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_foreignPassport">Foreign Passport</label>
+          <select
+            class="form-control"
+            name="foreignPassport"
+            formControlName="foreignPassport"
+            id="field_foreignPassport"
+            data-cy="foreignPassport"
+          >
+            <option [ngValue]="null"></option>
+            <option value="NA">NA</option>
+            <option value="NO">NO</option>
+            <option value="YES">YES</option>
+          </select>
+          <div
+            *ngIf="
+              editForm.get('foreignPassport')!.invalid &&
+              (editForm.get('foreignPassport')!.dirty || editForm.get('foreignPassport')!.touched)
+            "
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('foreignPassport')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_passportNumber">Passport Number</label>
+          <input
+            type="text"
+            class="form-control"
+            name="passportNumber"
+            id="field_passportNumber"
+            data-cy="passportNumber"
+            formControlName="passportNumber"
+          />
+          <div
+            *ngIf="
+              editForm.get('passportNumber')!.invalid && (editForm.get('passportNumber')!.dirty || editForm.get('passportNumber')!.touched)
+            "
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('passportNumber')?.errors?.required"> This field is required. </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_renouncedCitizenship">Renounced Citizenship</label>
+          <select
+            class="form-control"
+            name="renouncedCitizenship"
+            formControlName="renouncedCitizenship"
+            id="field_renouncedCitizenship"
+            data-cy="renouncedCitizenship"
+          >
+            <option [ngValue]="null"></option>
+            <option value="NA">NA</option>
+            <option value="NO">NO</option>
+            <option value="YES">YES</option>
+          </select>
+          <div
+            *ngIf="
+              editForm.get('renouncedCitizenship')!.invalid &&
+              (editForm.get('renouncedCitizenship')!.dirty || editForm.get('renouncedCitizenship')!.touched)
+            "
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('renouncedCitizenship')?.errors?.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_passportSurrendered">Passport Surrendered</label>
+          <select
+            class="form-control"
+            name="passportSurrendered"
+            formControlName="passportSurrendered"
+            id="field_passportSurrendered"
+            data-cy="passportSurrendered"
+          >
+            <option [ngValue]="null"></option>
+            <option value="NA">NA</option>
+            <option value="NO">NO</option>
+            <option value="YES">YES</option>
+          </select>
+          <div
+            *ngIf="
+              editForm.get('passportSurrendered')!.invalid &&
+              (editForm.get('passportSurrendered')!.dirty || editForm.get('passportSurrendered')!.touched)
+            "
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('passportSurrendered')?.errors?.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_foreignPassportNumber">Foreign Passport Number</label>
+          <input
+            type="text"
+            class="form-control"
+            name="foreignPassportNumber"
+            id="field_foreignPassportNumber"
+            data-cy="foreignPassportNumber"
+            formControlName="foreignPassportNumber"
+          />
+          <div
+            *ngIf="
+              editForm.get('foreignPassportNumber')!.invalid &&
+              (editForm.get('foreignPassportNumber')!.dirty || editForm.get('foreignPassportNumber')!.touched)
+            "
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('foreignPassportNumber')?.errors?.required">
+              This field is required.
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

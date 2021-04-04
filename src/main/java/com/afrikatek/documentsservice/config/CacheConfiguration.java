@@ -48,6 +48,23 @@ public class CacheConfiguration {
             createCache(cm, com.afrikatek.documentsservice.domain.User.class.getName());
             createCache(cm, com.afrikatek.documentsservice.domain.Authority.class.getName());
             createCache(cm, com.afrikatek.documentsservice.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.afrikatek.documentsservice.domain.Address.class.getName());
+            createCache(cm, com.afrikatek.documentsservice.domain.Applicant.class.getName());
+            createCache(cm, com.afrikatek.documentsservice.domain.Applicant.class.getName() + ".addresses");
+            createCache(cm, com.afrikatek.documentsservice.domain.Applicant.class.getName() + ".countryOfBirths");
+            createCache(cm, com.afrikatek.documentsservice.domain.DemographicDetails.class.getName());
+            createCache(cm, com.afrikatek.documentsservice.domain.MarriageDetails.class.getName());
+            createCache(cm, com.afrikatek.documentsservice.domain.NextOfKeen.class.getName());
+            createCache(cm, com.afrikatek.documentsservice.domain.Guardian.class.getName());
+            createCache(cm, com.afrikatek.documentsservice.domain.Passport.class.getName());
+            createCache(cm, com.afrikatek.documentsservice.domain.Declaration.class.getName());
+            createCache(cm, com.afrikatek.documentsservice.domain.Appointment.class.getName());
+            createCache(cm, com.afrikatek.documentsservice.domain.Appointment.class.getName() + ".appointmentSlots");
+            createCache(cm, com.afrikatek.documentsservice.domain.AppointmentSettings.class.getName());
+            createCache(cm, com.afrikatek.documentsservice.domain.AppointmentSlot.class.getName());
+            createCache(cm, com.afrikatek.documentsservice.domain.AppointmentSlot.class.getName() + ".applicants");
+            createCache(cm, com.afrikatek.documentsservice.domain.Country.class.getName());
+            createCache(cm, com.afrikatek.documentsservice.domain.Holiday.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

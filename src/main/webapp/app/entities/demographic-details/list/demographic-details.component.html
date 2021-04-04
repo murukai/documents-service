@@ -1,0 +1,117 @@
+<div>
+  <h2 id="page-heading" data-cy="DemographicDetailsHeading">
+    <span>Demographic Details</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-demographic-details"
+        [routerLink]="['/demographic-details/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Demographic Details </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="demographicDetails?.length === 0">
+    <span>No demographicDetails found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="demographicDetails && demographicDetails.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="eyeColor"><span>Eye Color</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="hairColor"><span>Hair Color</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="visibleMarks"><span>Visible Marks</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="profession"><span>Profession</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="placeOfBirth"><span>Place Of Birth</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="image"><span>Image</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let demographicDetails of demographicDetails; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/demographic-details', demographicDetails.id, 'view']">{{ demographicDetails.id }}</a>
+          </td>
+          <td>{{ demographicDetails.eyeColor }}</td>
+          <td>{{ demographicDetails.hairColor }}</td>
+          <td>{{ demographicDetails.visibleMarks }}</td>
+          <td>{{ demographicDetails.profession }}</td>
+          <td>{{ demographicDetails.placeOfBirth }}</td>
+          <td>
+            <a *ngIf="demographicDetails.image" (click)="openFile(demographicDetails.image, demographicDetails.imageContentType)">
+              <img
+                [src]="'data:' + demographicDetails.imageContentType + ';base64,' + demographicDetails.image"
+                style="max-height: 30px"
+                alt="demographicDetails image"
+              />
+            </a>
+            <span *ngIf="demographicDetails.image"
+              >{{ demographicDetails.imageContentType }}, {{ byteSize(demographicDetails.image) }}</span
+            >
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/demographic-details', demographicDetails.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/demographic-details', demographicDetails.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(demographicDetails)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="demographicDetails && demographicDetails.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

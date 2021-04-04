@@ -1,0 +1,56 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="declaration">
+      <h2 data-cy="declarationDetailsHeading"><span>Declaration</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ declaration.id }}</span>
+        </dd>
+        <dt><span>Citizen</span></dt>
+        <dd>
+          <span>{{ declaration.citizen }}</span>
+        </dd>
+        <dt><span>Passport</span></dt>
+        <dd>
+          <span>{{ declaration.passport }}</span>
+        </dd>
+        <dt><span>Foreign Passport</span></dt>
+        <dd>
+          <span>{{ declaration.foreignPassport }}</span>
+        </dd>
+        <dt><span>Passport Number</span></dt>
+        <dd>
+          <span>{{ declaration.passportNumber }}</span>
+        </dd>
+        <dt><span>Renounced Citizenship</span></dt>
+        <dd>
+          <span>{{ declaration.renouncedCitizenship }}</span>
+        </dd>
+        <dt><span>Passport Surrendered</span></dt>
+        <dd>
+          <span>{{ declaration.passportSurrendered }}</span>
+        </dd>
+        <dt><span>Foreign Passport Number</span></dt>
+        <dd>
+          <span>{{ declaration.foreignPassportNumber }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/declaration', declaration.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
