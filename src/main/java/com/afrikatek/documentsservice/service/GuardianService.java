@@ -2,7 +2,9 @@ package com.afrikatek.documentsservice.service;
 
 import com.afrikatek.documentsservice.domain.Guardian;
 import com.afrikatek.documentsservice.repository.GuardianRepository;
+import com.afrikatek.documentsservice.service.dto.ApplicantDTO;
 import com.afrikatek.documentsservice.service.dto.GuardianDTO;
+import com.afrikatek.documentsservice.service.mapper.ApplicantMapper;
 import com.afrikatek.documentsservice.service.mapper.GuardianMapper;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,9 +31,12 @@ public class GuardianService {
 
     private final GuardianMapper guardianMapper;
 
-    public GuardianService(GuardianRepository guardianRepository, GuardianMapper guardianMapper) {
+    private final ApplicantMapper applicantMapper;
+
+    public GuardianService(GuardianRepository guardianRepository, GuardianMapper guardianMapper, ApplicantMapper applicantMapper) {
         this.guardianRepository = guardianRepository;
         this.guardianMapper = guardianMapper;
+        this.applicantMapper = applicantMapper;
     }
 
     /**
@@ -114,5 +119,17 @@ public class GuardianService {
     public void delete(Long id) {
         log.debug("Request to delete Guardian : {}", id);
         guardianRepository.deleteById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<GuardianDTO> findByApplicant(ApplicantDTO applicantDTO) {
+        log.debug("Request to find guardian details for applicant {}", applicantDTO);
+        return guardianRepository.findByApplicant(applicantMapper.toEntity(applicantDTO)).map(guardianMapper::toDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<List<GuardianDTO>> findByApplicantAsCurrentUser(Pageable pageable) {
+        log.debug("Request to find guardians for the current logged in user ");
+        return guardianRepository.findByApplicantAsCurrentUser(pageable).map(guardianMapper::toDto);
     }
 }

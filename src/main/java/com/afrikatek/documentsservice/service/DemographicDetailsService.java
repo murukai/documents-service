@@ -2,7 +2,9 @@ package com.afrikatek.documentsservice.service;
 
 import com.afrikatek.documentsservice.domain.DemographicDetails;
 import com.afrikatek.documentsservice.repository.DemographicDetailsRepository;
+import com.afrikatek.documentsservice.service.dto.ApplicantDTO;
 import com.afrikatek.documentsservice.service.dto.DemographicDetailsDTO;
+import com.afrikatek.documentsservice.service.mapper.ApplicantMapper;
 import com.afrikatek.documentsservice.service.mapper.DemographicDetailsMapper;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,12 +31,16 @@ public class DemographicDetailsService {
 
     private final DemographicDetailsMapper demographicDetailsMapper;
 
+    private final ApplicantMapper applicantMapper;
+
     public DemographicDetailsService(
         DemographicDetailsRepository demographicDetailsRepository,
-        DemographicDetailsMapper demographicDetailsMapper
+        DemographicDetailsMapper demographicDetailsMapper,
+        ApplicantMapper applicantMapper
     ) {
         this.demographicDetailsRepository = demographicDetailsRepository;
         this.demographicDetailsMapper = demographicDetailsMapper;
+        this.applicantMapper = applicantMapper;
     }
 
     /**
@@ -117,5 +123,17 @@ public class DemographicDetailsService {
     public void delete(Long id) {
         log.debug("Request to delete DemographicDetails : {}", id);
         demographicDetailsRepository.deleteById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<DemographicDetailsDTO> findByApplicant(ApplicantDTO applicantDTO) {
+        log.debug("Request for demographic details for applicant {}", applicantDTO);
+        return demographicDetailsRepository.findByApplicant(applicantMapper.toEntity(applicantDTO)).map(demographicDetailsMapper::toDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<List<DemographicDetailsDTO>> findByApplicantAsCurrentUser(Pageable pageable) {
+        log.debug("Request for demographic details for currently logged in user");
+        return demographicDetailsRepository.findByApplicantAsCurrentUser(pageable).map(demographicDetailsMapper::toDto);
     }
 }

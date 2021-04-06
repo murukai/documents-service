@@ -1,5 +1,6 @@
 package com.afrikatek.documentsservice.service;
 
+import com.afrikatek.documentsservice.domain.Address;
 import com.afrikatek.documentsservice.domain.Applicant;
 import com.afrikatek.documentsservice.repository.ApplicantRepository;
 import com.afrikatek.documentsservice.service.dto.ApplicantDTO;

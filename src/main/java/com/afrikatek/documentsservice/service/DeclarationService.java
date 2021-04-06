@@ -2,7 +2,9 @@ package com.afrikatek.documentsservice.service;
 
 import com.afrikatek.documentsservice.domain.Declaration;
 import com.afrikatek.documentsservice.repository.DeclarationRepository;
+import com.afrikatek.documentsservice.service.dto.ApplicantDTO;
 import com.afrikatek.documentsservice.service.dto.DeclarationDTO;
+import com.afrikatek.documentsservice.service.mapper.ApplicantMapper;
 import com.afrikatek.documentsservice.service.mapper.DeclarationMapper;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,9 +31,16 @@ public class DeclarationService {
 
     private final DeclarationMapper declarationMapper;
 
-    public DeclarationService(DeclarationRepository declarationRepository, DeclarationMapper declarationMapper) {
+    private final ApplicantMapper applicantMapper;
+
+    public DeclarationService(
+        DeclarationRepository declarationRepository,
+        DeclarationMapper declarationMapper,
+        ApplicantMapper applicantMapper
+    ) {
         this.declarationRepository = declarationRepository;
         this.declarationMapper = declarationMapper;
+        this.applicantMapper = applicantMapper;
     }
 
     /**
@@ -114,5 +123,17 @@ public class DeclarationService {
     public void delete(Long id) {
         log.debug("Request to delete Declaration : {}", id);
         declarationRepository.deleteById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<DeclarationDTO> findByApplicant(ApplicantDTO applicantDTO) {
+        log.debug("Request for declaration details for applicant {}", applicantDTO);
+        return declarationRepository.findByApplicant(applicantMapper.toEntity(applicantDTO)).map(declarationMapper::toDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<List<DeclarationDTO>> findByApplicantAsCurrentUser(Pageable pageable) {
+        log.debug("Request for declarations for currently logged in user");
+        return declarationRepository.findByApplicantAsCurrentUser(pageable).map(declarationMapper::toDto);
     }
 }

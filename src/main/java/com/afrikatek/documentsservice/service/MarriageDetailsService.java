@@ -2,8 +2,11 @@ package com.afrikatek.documentsservice.service;
 
 import com.afrikatek.documentsservice.domain.MarriageDetails;
 import com.afrikatek.documentsservice.repository.MarriageDetailsRepository;
+import com.afrikatek.documentsservice.service.dto.ApplicantDTO;
 import com.afrikatek.documentsservice.service.dto.MarriageDetailsDTO;
+import com.afrikatek.documentsservice.service.mapper.ApplicantMapper;
 import com.afrikatek.documentsservice.service.mapper.MarriageDetailsMapper;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +28,16 @@ public class MarriageDetailsService {
 
     private final MarriageDetailsMapper marriageDetailsMapper;
 
-    public MarriageDetailsService(MarriageDetailsRepository marriageDetailsRepository, MarriageDetailsMapper marriageDetailsMapper) {
+    private final ApplicantMapper applicantMapper;
+
+    public MarriageDetailsService(
+        MarriageDetailsRepository marriageDetailsRepository,
+        MarriageDetailsMapper marriageDetailsMapper,
+        ApplicantMapper applicantMapper
+    ) {
         this.marriageDetailsRepository = marriageDetailsRepository;
         this.marriageDetailsMapper = marriageDetailsMapper;
+        this.applicantMapper = applicantMapper;
     }
 
     /**
@@ -96,5 +106,17 @@ public class MarriageDetailsService {
     public void delete(Long id) {
         log.debug("Request to delete MarriageDetails : {}", id);
         marriageDetailsRepository.deleteById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<MarriageDetailsDTO> findByApplicant(ApplicantDTO applicantDTO) {
+        log.debug("Request to find marriage details for applicant {}", applicantDTO);
+        return marriageDetailsRepository.findByApplicant(applicantMapper.toEntity(applicantDTO)).map(marriageDetailsMapper::toDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<List<MarriageDetailsDTO>> findByApplicantAsCurrentUser(Pageable pageable) {
+        log.debug("Request to find marriage details for the current user");
+        return marriageDetailsRepository.findByApplicantAsCurrentUser(pageable).map(marriageDetailsMapper::toDto);
     }
 }
