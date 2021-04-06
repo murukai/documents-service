@@ -2,8 +2,11 @@ package com.afrikatek.documentsservice.service;
 
 import com.afrikatek.documentsservice.domain.NextOfKeen;
 import com.afrikatek.documentsservice.repository.NextOfKeenRepository;
+import com.afrikatek.documentsservice.service.dto.ApplicantDTO;
 import com.afrikatek.documentsservice.service.dto.NextOfKeenDTO;
+import com.afrikatek.documentsservice.service.mapper.ApplicantMapper;
 import com.afrikatek.documentsservice.service.mapper.NextOfKeenMapper;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,9 +28,16 @@ public class NextOfKeenService {
 
     private final NextOfKeenMapper nextOfKeenMapper;
 
-    public NextOfKeenService(NextOfKeenRepository nextOfKeenRepository, NextOfKeenMapper nextOfKeenMapper) {
+    private final ApplicantMapper applicantMapper;
+
+    public NextOfKeenService(
+        NextOfKeenRepository nextOfKeenRepository,
+        NextOfKeenMapper nextOfKeenMapper,
+        ApplicantMapper applicantMapper
+    ) {
         this.nextOfKeenRepository = nextOfKeenRepository;
         this.nextOfKeenMapper = nextOfKeenMapper;
+        this.applicantMapper = applicantMapper;
     }
 
     /**
@@ -96,5 +106,17 @@ public class NextOfKeenService {
     public void delete(Long id) {
         log.debug("Request to delete NextOfKeen : {}", id);
         nextOfKeenRepository.deleteById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<NextOfKeenDTO> findByApplicant(ApplicantDTO applicantDTO) {
+        log.debug("Request to get next of keen for applicant {}", applicantDTO);
+        return nextOfKeenRepository.findByApplicant(applicantMapper.toEntity(applicantDTO)).map(nextOfKeenMapper::toDto);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<List<NextOfKeenDTO>> findByApplicantAsCurrentUser(Pageable pageable) {
+        log.debug("Request for next of keen details for applicant for current user");
+        return nextOfKeenRepository.findByApplicantAsCurrentUser(pageable).map(nextOfKeenMapper::toDto);
     }
 }

@@ -1,6 +1,11 @@
 package com.afrikatek.documentsservice.repository;
 
+import com.afrikatek.documentsservice.domain.Applicant;
 import com.afrikatek.documentsservice.domain.NextOfKeen;
+import java.util.List;
+import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -9,4 +14,9 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface NextOfKeenRepository extends JpaRepository<NextOfKeen, Long> {}
+public interface NextOfKeenRepository extends JpaRepository<NextOfKeen, Long> {
+    Optional<NextOfKeen> findByApplicant(Applicant applicant);
+
+    @Query("select nextOfKeen from NextOfKeen nextOfKeen where nextOfKeen.applicant.user.login = ?#{principal.username}")
+    Page<List<NextOfKeen>> findByApplicantAsCurrentUser(Pageable pageable);
+}

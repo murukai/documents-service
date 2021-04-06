@@ -1,6 +1,10 @@
 package com.afrikatek.documentsservice.repository;
 
+import com.afrikatek.documentsservice.domain.Applicant;
 import com.afrikatek.documentsservice.domain.Guardian;
+import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -9,4 +13,9 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface GuardianRepository extends JpaRepository<Guardian, Long> {}
+public interface GuardianRepository extends JpaRepository<Guardian, Long> {
+    Optional<Guardian> findByApplicant(Applicant applicant);
+
+    @Query("select guardian from Guardian guardian WHERE guardian.applicant.user.login = ?#{principal.username}")
+    Page<Guardian> findByApplicantAsCurrentUser(Pageable pageable);
+}

@@ -162,6 +162,12 @@
   </div>
   <div class="col-9">
     <div class="row">
+      <div *ngIf="!marriageDetails" class="col-6">
+        <div class="card">
+          <div class="card-header">Marriage Details</div>
+          <div class="card-body">No Marriage Details</div>
+        </div>
+      </div>
       <div *ngIf="marriageDetails" class="col-6">
         <div class="card">
           <div class="card-header">Marriage Details</div>
@@ -219,8 +225,14 @@
           </div>
         </div>
       </div>
-      <div class="col-6">
-        <div *ngIf="nextOfKeen" class="card">
+      <div *ngIf="!nextOfKeen" class="col-6">
+        <div class="card">
+          <div class="card-header">Next Of Keen</div>
+          <div class="card-body">No Next Of Keen</div>
+        </div>
+      </div>
+      <div *ngIf="nextOfKeen" class="col-6">
+        <div class="card">
           <div class="card-header">Next of Keen</div>
           <div class="card-body">
             <h5 class="card-title">{{ nextOfKeen.fullName }}</h5>
@@ -236,6 +248,12 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="row">
+      <div *ngIf="!democraphicDetails" class="col-6">Demographic not Details Available</div>
+      <div *ngIf="democraphicDetails" class="col-6">Demographic not Details Available</div>
+      <div class="col-6"></div>
+      <div class="col-6"></div>
     </div>
   </div>
 </div>

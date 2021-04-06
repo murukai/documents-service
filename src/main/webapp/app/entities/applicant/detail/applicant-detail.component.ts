@@ -43,37 +43,45 @@ export class ApplicantDetailComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ applicant }) => {
       this.applicant = applicant;
-      if (applicant.democraphicDetails.id) {
+      if (applicant.democraphicDetails) {
         this.democraphicDetailsService
           .find(applicant.democraphicDetails.id)
           .subscribe((res: HttpResponse<IDemographicDetails>) => (this.democraphicDetails = res.body));
       }
-
-      if (applicant.declaration.id) {
+      console.error('Found Demographic details id is ', applicant.democraphicDetails.id);
+      const declarationId = applicant.declaration.id;
+      console.error('The Applicant', applicant);
+      console.error('Declaration id is : {}', declarationId);
+      if (applicant.declaration) {
         this.declarationService
           .find(applicant.declaration.id)
           .subscribe((res: HttpResponse<IDeclaration>) => (this.declaration = res.body));
       }
-
-      if (applicant.guardian.id) {
+      const guardianId = applicant.guardian.id;
+      console.error('Guardian Id is ', guardianId);
+      if (applicant.guardian) {
         this.guardianService.find(applicant.guardian.id).subscribe((res: HttpResponse<IGuardian>) => (this.guardian = res.body));
       }
 
-      if (applicant.marriageDetails.id) {
+      console.error('MarriageDetails is ', applicant.marriageDetails);
+      if (applicant.marriageDetails) {
         this.marriageDetailsService
           .find(applicant.marriageDetails.id)
           .subscribe((res: HttpResponse<IMarriageDetails>) => (this.marriageDetails = res.body));
       }
-
-      if (applicant.nextOfKeen.id) {
+      console.error('Next of Keen is ', applicant.nextOfKeen);
+      if (applicant.nextOfKeen) {
         this.nextOfKeenService.find(applicant.nextOfKeen.id).subscribe((res: HttpResponse<INextOfKeen>) => (this.nextOfKeen = res.body));
       }
 
+      const appointmentSlotId = applicant.appointmentSlot.id;
+      console.error('Appointment Slot id is ', appointmentSlotId);
       if (applicant.appointmentSlot.id) {
         this.appointmentSlotService
           .find(applicant.appointmentSlot.id)
           .subscribe((res: HttpResponse<IAppointmentSlot>) => (this.appointmentSlot = res.body));
       }
+      console.error('Appointment slot is ', this.appointmentSlot);
     });
   }
 

@@ -2,7 +2,9 @@ package com.afrikatek.documentsservice.web.rest;
 
 import com.afrikatek.documentsservice.repository.ApplicantRepository;
 import com.afrikatek.documentsservice.service.ApplicantService;
+import com.afrikatek.documentsservice.service.NextOfKeenService;
 import com.afrikatek.documentsservice.service.dto.ApplicantDTO;
+import com.afrikatek.documentsservice.service.dto.NextOfKeenDTO;
 import com.afrikatek.documentsservice.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -44,9 +46,16 @@ public class ApplicantResource {
 
     private final ApplicantRepository applicantRepository;
 
-    public ApplicantResource(ApplicantService applicantService, ApplicantRepository applicantRepository) {
+    private final NextOfKeenService nextOfKeenService;
+
+    public ApplicantResource(
+        ApplicantService applicantService,
+        ApplicantRepository applicantRepository,
+        NextOfKeenService nextOfKeenService
+    ) {
         this.applicantService = applicantService;
         this.applicantRepository = applicantRepository;
+        this.nextOfKeenService = nextOfKeenService;
     }
 
     /**
@@ -176,7 +185,7 @@ public class ApplicantResource {
     public ResponseEntity<ApplicantDTO> getApplicant(@PathVariable Long id) {
         log.debug("REST request to get Applicant : {}", id);
         Optional<ApplicantDTO> applicantDTO = applicantService.findOne(id);
-        log.debug("Found Applicant : {}", applicantDTO);
+
         return ResponseUtil.wrapOrNotFound(applicantDTO);
     }
 
