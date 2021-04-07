@@ -128,7 +128,7 @@ public class GuardianService {
     }
 
     @Transactional(readOnly = true)
-    public Page<List<GuardianDTO>> findByApplicantAsCurrentUser(Pageable pageable) {
+    public Page<GuardianDTO> findByApplicantAsCurrentUser(Pageable pageable) {
         log.debug("Request to find guardians for the current logged in user ");
         return guardianRepository.findByApplicantAsCurrentUser(pageable).map(guardianMapper::toDto);
     }

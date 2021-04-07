@@ -20,5 +20,5 @@ public interface MarriageDetailsRepository extends JpaRepository<MarriageDetails
     @Query(
         "select marriageDetails from MarriageDetails marriageDetails where marriageDetails.applicant.user.login = ?#{principal.username}"
     )
-    Page<List<MarriageDetails>> findByApplicantAsCurrentUser(Pageable pageable);
+    Page<MarriageDetails> findByApplicantAsCurrentUser(Pageable pageable);
 }

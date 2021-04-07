@@ -20,5 +20,5 @@ public interface DemographicDetailsRepository extends JpaRepository<DemographicD
     @Query(
         "select demographicDetails from DemographicDetails demographicDetails where demographicDetails.applicant.user.login = ?#{principal.username}"
     )
-    Page<List<DemographicDetails>> findByApplicantAsCurrentUser(Pageable pageable);
+    Page<DemographicDetails> findByApplicantAsCurrentUser(Pageable pageable);
 }

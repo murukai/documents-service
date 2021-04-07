@@ -132,7 +132,7 @@ public class DemographicDetailsService {
     }
 
     @Transactional(readOnly = true)
-    public Page<List<DemographicDetailsDTO>> findByApplicantAsCurrentUser(Pageable pageable) {
+    public Page<DemographicDetailsDTO> findByApplicantAsCurrentUser(Pageable pageable) {
         log.debug("Request for demographic details for currently logged in user");
         return demographicDetailsRepository.findByApplicantAsCurrentUser(pageable).map(demographicDetailsMapper::toDto);
     }

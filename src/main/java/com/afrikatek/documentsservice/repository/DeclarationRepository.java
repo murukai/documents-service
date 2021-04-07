@@ -18,5 +18,5 @@ public interface DeclarationRepository extends JpaRepository<Declaration, Long> 
     Optional<Declaration> findByApplicant(Applicant applicant);
 
     @Query("select declaration from Declaration declaration where declaration.applicant.user.login = ?#{principal.username}")
-    Page<List<Declaration>> findByApplicantAsCurrentUser(Pageable pageable);
+    Page<Declaration> findByApplicantAsCurrentUser(Pageable pageable);
 }

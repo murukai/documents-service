@@ -132,7 +132,7 @@ public class DeclarationService {
     }
 
     @Transactional(readOnly = true)
-    public Page<List<DeclarationDTO>> findByApplicantAsCurrentUser(Pageable pageable) {
+    public Page<DeclarationDTO> findByApplicantAsCurrentUser(Pageable pageable) {
         log.debug("Request for declarations for currently logged in user");
         return declarationRepository.findByApplicantAsCurrentUser(pageable).map(declarationMapper::toDto);
     }

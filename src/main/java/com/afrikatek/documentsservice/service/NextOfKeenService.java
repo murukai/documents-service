@@ -115,7 +115,7 @@ public class NextOfKeenService {
     }
 
     @Transactional(readOnly = true)
-    public Page<List<NextOfKeenDTO>> findByApplicantAsCurrentUser(Pageable pageable) {
+    public Page<NextOfKeenDTO> findByApplicantAsCurrentUser(Pageable pageable) {
         log.debug("Request for next of keen details for applicant for current user");
         return nextOfKeenRepository.findByApplicantAsCurrentUser(pageable).map(nextOfKeenMapper::toDto);
     }

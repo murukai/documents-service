@@ -18,5 +18,5 @@ public interface NextOfKeenRepository extends JpaRepository<NextOfKeen, Long> {
     Optional<NextOfKeen> findByApplicant(Applicant applicant);
 
     @Query("select nextOfKeen from NextOfKeen nextOfKeen where nextOfKeen.applicant.user.login = ?#{principal.username}")
-    Page<List<NextOfKeen>> findByApplicantAsCurrentUser(Pageable pageable);
+    Page<NextOfKeen> findByApplicantAsCurrentUser(Pageable pageable);
 }

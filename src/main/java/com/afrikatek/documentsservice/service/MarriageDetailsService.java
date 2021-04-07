@@ -115,7 +115,7 @@ public class MarriageDetailsService {
     }
 
     @Transactional(readOnly = true)
-    public Page<List<MarriageDetailsDTO>> findByApplicantAsCurrentUser(Pageable pageable) {
+    public Page<MarriageDetailsDTO> findByApplicantAsCurrentUser(Pageable pageable) {
         log.debug("Request to find marriage details for the current user");
         return marriageDetailsRepository.findByApplicantAsCurrentUser(pageable).map(marriageDetailsMapper::toDto);
     }

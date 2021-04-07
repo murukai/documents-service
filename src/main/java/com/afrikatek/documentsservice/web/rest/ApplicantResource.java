@@ -59,14 +59,30 @@ public class ApplicantResource {
 
     private final NextOfKeenService nextOfKeenService;
 
+    private final MarriageDetailsService marriageDetailsService;
+
+    private final DeclarationService declarationService;
+
+    private final DemographicDetailsService demographicDetailsService;
+
+    private final GuardianService guardianService;
+
     public ApplicantResource(
         ApplicantService applicantService,
         ApplicantRepository applicantRepository,
-        NextOfKeenService nextOfKeenService
+        NextOfKeenService nextOfKeenService,
+        MarriageDetailsService marriageDetailsService,
+        DeclarationService declarationService,
+        DemographicDetailsService demographicDetailsService,
+        GuardianService guardianService
     ) {
         this.applicantService = applicantService;
         this.applicantRepository = applicantRepository;
         this.nextOfKeenService = nextOfKeenService;
+        this.marriageDetailsService = marriageDetailsService;
+        this.declarationService = declarationService;
+        this.demographicDetailsService = demographicDetailsService;
+        this.guardianService = guardianService;
     }
 
     /**
@@ -196,7 +212,6 @@ public class ApplicantResource {
     public ResponseEntity<ApplicantDTO> getApplicant(@PathVariable Long id) {
         log.debug("REST request to get Applicant : {}", id);
         Optional<ApplicantDTO> applicantDTO = applicantService.findOne(id);
-
         return ResponseUtil.wrapOrNotFound(applicantDTO);
     }
 
@@ -214,5 +229,96 @@ public class ApplicantResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    /**
+     * Getting linked objects for applicant
+     */
+
+    // Next Of Keen
+
+    @GetMapping("/applicants/{id}/next-of-keen")
+    public ResponseEntity<NextOfKeenDTO> findNextOfKeenByApplicant(@PathVariable Long id) {
+        log.debug("REST request to get NextOfKeen for Applicant : {}", id);
+        ApplicantDTO applicantDTO = applicantService.findOne(id).get();
+        Optional<NextOfKeenDTO> optionalNextOfKeenDTO = nextOfKeenService.findByApplicant(applicantDTO);
+        return ResponseUtil.wrapOrNotFound(optionalNextOfKeenDTO);
+    }
+
+    @GetMapping("/applicants/user/next-of-keen")
+    public ResponseEntity<List<NextOfKeenDTO>> findNextOfKeenByUser(Pageable pageable) {
+        log.debug("REST request to get NextOfKeen for Applicants for logged in User");
+        Page<NextOfKeenDTO> page = nextOfKeenService.findByApplicantAsCurrentUser(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    // marriage details
+    @GetMapping("/applicants/{id}/marriage-details")
+    public ResponseEntity<MarriageDetailsDTO> findMarriageDetailsByApplicant(@PathVariable Long id) {
+        log.debug("REST request to get MarriageDetails for Applicant : {}", id);
+        ApplicantDTO applicantDTO = applicantService.findOne(id).get();
+        Optional<MarriageDetailsDTO> optionalMarriageDetailsDTO = marriageDetailsService.findByApplicant(applicantDTO);
+        return ResponseUtil.wrapOrNotFound(optionalMarriageDetailsDTO);
+    }
+
+    @GetMapping("/applicants/user/marriage-details")
+    public ResponseEntity<List<MarriageDetailsDTO>> findMarriageDetailsByUser(Pageable pageable) {
+        log.debug("REST request to get MarriageDetails for Applicants for logged in User");
+        Page<MarriageDetailsDTO> page = marriageDetailsService.findByApplicantAsCurrentUser(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    // declaration
+    @GetMapping("/applicants/{id}/declaration")
+    public ResponseEntity<DeclarationDTO> findDeclarationByApplicant(@PathVariable Long id) {
+        log.debug("REST request to get Declaration for Applicant : {}", id);
+        ApplicantDTO applicantDTO = applicantService.findOne(id).get();
+        Optional<DeclarationDTO> optionalDeclarationDTO = declarationService.findByApplicant(applicantDTO);
+        return ResponseUtil.wrapOrNotFound(optionalDeclarationDTO);
+    }
+
+    @GetMapping("/applicants/user/declaration")
+    public ResponseEntity<List<DeclarationDTO>> findDeclarationByUser(Pageable pageable) {
+        log.debug("REST request to get Declaration for Applicants for logged in User");
+        Page<DeclarationDTO> page = declarationService.findByApplicantAsCurrentUser(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    // demographic details
+    @GetMapping("/applicants/{id}/demographic-details")
+    public ResponseEntity<DemographicDetailsDTO> findDemographicDetailsByApplicant(@PathVariable Long id) {
+        log.debug("REST request to get DemographicDetails for Applicant : {}", id);
+        ApplicantDTO applicantDTO = applicantService.findOne(id).get();
+        Optional<DemographicDetailsDTO> optionalDemographicDetailsDTO = demographicDetailsService.findByApplicant(applicantDTO);
+        return ResponseUtil.wrapOrNotFound(optionalDemographicDetailsDTO);
+    }
+
+    @GetMapping("/applicants/user/demographic-details")
+    public ResponseEntity<List<DemographicDetailsDTO>> findDemographicDetailsByUser(Pageable pageable) {
+        log.debug("REST request to get DemographicDetails for Applicants for logged in User");
+        Page<DemographicDetailsDTO> page = demographicDetailsService.findByApplicantAsCurrentUser(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    // guardian details
+
+    @GetMapping("/applicants/{id}/guardian")
+    public ResponseEntity<GuardianDTO> findGuardianByApplicant(@PathVariable Long id) {
+        log.debug("REST request to get Guardian for Applicant : {}", id);
+        ApplicantDTO applicantDTO = applicantService.findOne(id).get();
+        Optional<GuardianDTO> optionalGuardianDTO = guardianService.findByApplicant(applicantDTO);
+        return ResponseUtil.wrapOrNotFound(optionalGuardianDTO);
+    }
+
+    @GetMapping("/applicants/user/guardian")
+    public ResponseEntity<List<GuardianDTO>> findGuardianByUser(Pageable pageable) {
+        log.debug("REST request to get Guardian for Applicants for logged in User");
+        Page<GuardianDTO> page = guardianService.findByApplicantAsCurrentUser(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 }

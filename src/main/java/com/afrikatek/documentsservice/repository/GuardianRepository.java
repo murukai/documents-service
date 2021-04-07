@@ -18,5 +18,5 @@ public interface GuardianRepository extends JpaRepository<Guardian, Long> {
     Optional<Guardian> findByApplicant(Applicant applicant);
 
     @Query("select guardian from Guardian guardian WHERE guardian.applicant.user.login = ?#{principal.username}")
-    Page<List<Guardian>> findByApplicantAsCurrentUser(Pageable pageable);
+    Page<Guardian> findByApplicantAsCurrentUser(Pageable pageable);
 }
