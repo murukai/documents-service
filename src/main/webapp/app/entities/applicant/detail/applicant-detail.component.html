@@ -1,259 +1,177 @@
-<div class="row justify-content-center">
-  <div class="col-8">
-    <div *ngIf="applicant">
-      <h2 data-cy="applicantDetailsHeading"><span>Applicant</span></h2>
-
-      <hr />
-
-      <jhi-alert-error></jhi-alert-error>
-
-      <jhi-alert></jhi-alert>
-
-      <dl class="row-md jh-entity-details">
-        <dt><span>ID</span></dt>
-        <dd>
-          <span>{{ applicant.id }}</span>
-        </dd>
-        <dt><span>Surname</span></dt>
-        <dd>
-          <span>{{ applicant.surname }}</span>
-        </dd>
-        <dt><span>Other Names</span></dt>
-        <dd>
-          <span>{{ applicant.otherNames }}</span>
-        </dd>
-        <dt><span>Maiden Name</span></dt>
-        <dd>
-          <span>{{ applicant.maidenName }}</span>
-        </dd>
-        <dt><span>Changed Name</span></dt>
-        <dd>
-          <span>{{ applicant.changedName }}</span>
-        </dd>
-        <dt><span>Gender</span></dt>
-        <dd>
-          <span>{{ applicant.gender }}</span>
-        </dd>
-        <dt><span>Marital Status</span></dt>
-        <dd>
-          <span>{{ applicant.maritalStatus }}</span>
-        </dd>
-        <dt><span>Date Of Birth</span></dt>
-        <dd>
-          <span>{{ applicant.dateOfBirth | formatMediumDate }}</span>
-        </dd>
-        <dt><span>Id Number</span></dt>
-        <dd>
-          <span>{{ applicant.idNumber }}</span>
-        </dd>
-        <dt><span>Birth Entry Number</span></dt>
-        <dd>
-          <span>{{ applicant.birthEntryNumber }}</span>
-        </dd>
-        <dt><span>Democraphic Details</span></dt>
-        <dd>
-          <div *ngIf="applicant.democraphicDetails">
-            <a [routerLink]="['/demographic-details', applicant.democraphicDetails?.id, 'view']">{{
-              applicant.democraphicDetails?.profession
-            }}</a>
-          </div>
-        </dd>
-        <dt><span>Declaration</span></dt>
-        <dd>
-          <div *ngIf="applicant.declaration">
-            <a [routerLink]="['/declaration', applicant.declaration?.id, 'view']">{{ applicant.declaration?.passportNumber }}</a>
-          </div>
-        </dd>
-        <dt><span>Guardian</span></dt>
-        <dd>
-          <div *ngIf="applicant.guardian">
-            <a [routerLink]="['/guardian', applicant.guardian?.id, 'view']">{{ applicant.guardian?.fullName }}</a>
-          </div>
-        </dd>
-        <dt><span>User</span></dt>
-        <dd>
-          <span>{{ applicant.user?.login }}</span>
-        </dd>
-        <dt><span>Appointment Slot</span></dt>
-        <dd>
-          <div *ngIf="applicant.appointmentSlot">
-            <a [routerLink]="['/appointment-slot', applicant.appointmentSlot?.id, 'view']">{{
-              applicant.appointmentSlot?.timeOfAppointment
-            }}</a>
-          </div>
-        </dd>
-      </dl>
-    </div>
-  </div>
-</div>
-<div class="row" style="margin-bottom: 1%">
-  <div *ngIf="applicant" class="col-12">
-    <div class="card">
-      <div class="card-horizontal">
-        <div class="img-square-wrapper">
-          <img class="" src="http://via.placeholder.com/300x180" alt="Card image cap" />
-        </div>
-        <div class="card-body">
-          <h4 class="card-title">{{ applicant.surname }} - Personal Details</h4>
-          <hr />
-          <div class="row">
-            <div class="col-6">
-              <div class="row">
-                <div class="col-sm-4">Name</div>
-                <div class="col-sm-8">{{ applicant.otherNames }}</div>
+<div class="row bg-light">
+  <div class="container">
+    <div class="row d-flex justify-content-center">
+      <div class="col-md-12 mt-5 pt-5">
+        <div class="row z-depth-3">
+          <div class="col-sm-4 bg-info rounded-left">
+            <div class="card-block text-center text-white">
+              <div *ngIf="demographicDetails" class="col-md-4 mt-5" style="margin: 0 auto">
+                <div *ngIf="demographicDetails.image">
+                  <a (click)="openFile(demographicDetails.image, demographicDetails.imageContentType)">
+                    <img
+                      [src]="'data:' + demographicDetails.imageContentType + ';base64,' + demographicDetails.image"
+                      style="max-width: 100%"
+                      alt="demographicDetails image"
+                    />
+                  </a>
+                </div>
               </div>
-              <div class="row">
-                <div class="col-sm-4">Gender</div>
-                <div class="col-sm-8">{{ applicant.gender }}</div>
-              </div>
-              <div class="row">
-                <div class="col-sm-4">Date Of Birth</div>
-                <div class="col-sm-8">{{ applicant.dateOfBirth | formatMediumDate }}</div>
-              </div>
-              <div class="row">
-                <div class="col-sm-4">Id Number</div>
-                <div class="col-sm-8">{{ applicant.idNumber }}</div>
-              </div>
+              <i class="fas fa-user-tie fa-7x mt-5"></i>
+              <h4 *ngIf="applicant" class="font-weight-bold mt-4">{{ applicant.surname }}</h4>
+              <p *ngIf="demographicDetails">{{ demographicDetails.profession }}</p>
+              <i class="far fa-edit fa2x mb-4"></i>
             </div>
-
-            <div class="col-6">
-              <div class="row">
-                <div class="col-sm-4">Chnaged Name</div>
-                <div class="col-sm-8">{{ applicant.changedName }}</div>
-              </div>
-              <div class="row">
-                <div class="col-sm-4">Maiden Name</div>
-                <div class="col-sm-8">{{ applicant.maidenName }}</div>
-              </div>
-              <div class="row">
-                <div class="col-sm-4">Birth Entry Number</div>
-                <div class="col-sm-8">{{ applicant.birthEntryNumber }}</div>
-              </div>
-              <div class="row">
-                <div class="col-sm-4">Marital Status</div>
-                <div class="col-sm-8">{{ applicant.maritalStatus }}</div>
-              </div>
-            </div>
+            <ul class="list-group text-white mb-3">
+              <li class="list-group-item list-group-item-info">
+                <a data-cy="entityCreateButton" [routerLink]="['/declaration/new']">Declaration</a>
+              </li>
+              <li class="list-group-item list-group-item-success"><a href="#">Bookings</a></li>
+              <li class="list-group-item list-group-item-danger">
+                <a data-cy="entityCreateButton" [routerLink]="['/address/new']">Addresses</a>
+              </li>
+              <li class="list-group-item list-group-item-info">
+                <a data-cy="entityCreateButton" [routerLink]="['/appointment-slot/new']">Appointment Slots</a>
+              </li>
+              <li class="list-group-item list-group-item-success"><a href="#">Bookings</a></li>
+            </ul>
           </div>
-        </div>
-      </div>
-      <div class="card-footer">
-        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
-        </button>
-
-        <button type="button" [routerLink]="['/applicant', applicant.id, 'edit']" class="btn btn-primary">
-          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-3">
-    <div class="card">
-      <div class="card-header">Featured</div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">Cras justo odio</li>
-        <li class="list-group-item">Dapibus ac facilisis in</li>
-        <li class="list-group-item">Vestibulum at eros</li>
-      </ul>
-    </div>
-  </div>
-  <div class="col-9">
-    <div class="row">
-      <div *ngIf="!marriageDetails" class="col-6">
-        <div class="card">
-          <div class="card-header">Marriage Details</div>
-          <div class="card-body">No Marriage Details</div>
-        </div>
-      </div>
-      <div *ngIf="marriageDetails" class="col-6">
-        <div class="card">
-          <div class="card-header">Marriage Details</div>
-          <div class="card-body">
-            <h5 class="card-title">{{ marriageDetails.spouseFullName }}</h5>
-            <hr />
+          <div *ngIf="applicant" class="col-sm-8 bg-white rounded-right">
+            <h3 class="mt-3 text-center">Information</h3>
+            <hr class="badge-primary mt-0 w-25" />
             <div class="row">
-              <div class="col-6">
-                <div class="row">
-                  <div class="col-sm-4">Previous Spouses</div>
-                  <div class="col-sm-8">{{ marriageDetails.previousSppouses }}</div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-4">Place Of Marriage</div>
-                  <div class="col-sm-8">{{ marriageDetails.dateOfMarriage | formatMediumDate }}</div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-4">Date Of Birth</div>
-                  <div class="col-sm-8">{{ marriageDetails.placeOfMarriage }}</div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-4">Spousal Place Of Birth</div>
-                  <div class="col-sm-8">{{ marriageDetails.spousePlaceOfBirth }}</div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-4">Country Of Marriage</div>
-                  <div class="col-sm-8">{{ marriageDetails.countryOfMarriage }}</div>
-                </div>
+              <div class="col-sm-6">
+                <p class="font-weight-bold">Surname</p>
+                <h6 class="text-muted">{{ applicant.surname }}</h6>
               </div>
-
-              <div class="col-6">
-                <div class="row">
-                  <div class="col-sm-4">Spouse Country of Birth</div>
-                  <div class="col-sm-8">{{ marriageDetails.spouseCountryOfBirth }}</div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-4">Marriage Number</div>
-                  <div class="col-sm-8">{{ marriageDetails.marriageNumber }}</div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-4">Married Before</div>
-                  <div class="col-sm-8">{{ marriageDetails.marriedBefore }}</div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-4">Marriage Order</div>
-                  <div class="col-sm-8">{{ marriageDetails.marriageOrder }}</div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-4">Marriage Order</div>
-                  <div class="col-sm-8">{{ marriageDetails.devorceOrder }}</div>
-                </div>
+              <div class="col-sm-6">
+                <p class="font-weight-bold">Other Names</p>
+                <h6 class="text-muted">{{ applicant.otherNames }}</h6>
               </div>
             </div>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-          </div>
-        </div>
-      </div>
-      <div *ngIf="!nextOfKeen" class="col-6">
-        <div class="card">
-          <div class="card-header">Next Of Keen</div>
-          <div class="card-body">No Next Of Keen</div>
-        </div>
-      </div>
-      <div *ngIf="nextOfKeen" class="col-6">
-        <div class="card">
-          <div class="card-header">Next of Keen</div>
-          <div class="card-body">
-            <h5 class="card-title">{{ nextOfKeen.fullName }}</h5>
             <div class="row">
-              <div class="col-6">
-                <div class="row">
-                  <div class="col-sm-4">Relationship To Applicant</div>
-                  <div class="col-sm-8">{{ nextOfKeen.relationshipToApplicant }}</div>
-                </div>
+              <div class="col-sm-6">
+                <p class="font-weight-bold">Maiden Name</p>
+                <h6 class="text-muted">{{ applicant.maidenName }}</h6>
+              </div>
+              <div class="col-sm-6">
+                <p class="font-weight-bold">Marital Status</p>
+                <h6 class="text-muted">{{ applicant.changedName }}</h6>
               </div>
             </div>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
+            <div class="row">
+              <div class="col-sm-6">
+                <p class="font-weight-bold">Gender</p>
+                <h6 class="text-muted">{{ applicant.gender }}</h6>
+              </div>
+              <div class="col-sm-6">
+                <p class="font-weight-bold">Marital Status</p>
+                <h6 class="text-muted">{{ applicant.maritalStatus }}</h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <p class="font-weight-bold">Date Of Birth</p>
+                <h6 class="text-muted">{{ applicant.dateOfBirth | formatMediumDate }}</h6>
+              </div>
+              <div class="col-sm-6">
+                <p class="font-weight-bold">Id Number</p>
+                <h6 class="text-muted">{{ applicant.idNumber }}</h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <p class="font-weight-bold">Birth Entry Number</p>
+                <h6 class="text-muted">{{ applicant.birthEntryNumber }}</h6>
+              </div>
+            </div>
+            <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+              <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+            </button>
+
+            <button type="button" [routerLink]="['/applicant', applicant.id, 'edit']" class="btn btn-primary">
+              <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+            </button>
+            <h4 class="mt-3">Other Information</h4>
+            <hr class="badge-primary" />
+            <div *ngIf="demographicDetails">
+              <div class="row">
+                <div class="col-sm-6">
+                  <p class="font-weight-bold">Eye Color</p>
+                  <h6 class="text-muted">{{ demographicDetails.eyeColor }}</h6>
+                </div>
+                <div class="col-sm-6">
+                  <p class="font-weight-bold">Hair Color</p>
+                  <h6 class="text-muted">{{ demographicDetails.hairColor }}</h6>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <p class="font-weight-bold">Visible Marks</p>
+                  <h6 class="text-muted">{{ demographicDetails.visibleMarks }}</h6>
+                </div>
+                <div class="col-sm-6">
+                  <p class="font-weight-bold">Profession</p>
+                  <h6 class="text-muted">{{ demographicDetails.profession }}</h6>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <p class="font-weight-bold">Place Of Birth</p>
+                  <h6 class="text-muted">{{ demographicDetails.placeOfBirth }}</h6>
+                </div>
+              </div>
+              <button type="submit" (click)="previousState()" class="btn btn-info mb-3" data-cy="entityDetailsBackButton">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+              </button>
+
+              <button type="button" [routerLink]="['/demographic-details', demographicDetails.id, 'edit']" class="btn btn-primary mb-3">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="row">
-      <div *ngIf="!democraphicDetails" class="col-6">Demographic not Details Available</div>
-      <div *ngIf="democraphicDetails" class="col-6">Demographic not Details Available</div>
-      <div class="col-6"></div>
-      <div class="col-6"></div>
+      <div class="col-md-12 mb-5 pt-5">
+        <div class="row z-depth-3">
+          <div *ngIf="nextOfKeen" class="col-sm-12 bg-white rounded-right">
+            <h3 class="mt-3">Next Of Keen</h3>
+            <hr class="badge-primary" />
+            <div class="row">
+              <div class="col-sm-6">
+                <p class="font-weight-bold">Full Name</p>
+                <h6 class="text-muted">{{ nextOfKeen.fullName }}</h6>
+              </div>
+              <div class="col-sm-6">
+                <p class="font-weight-bold">Relationship To Applicant</p>
+                <h6 class="text-muted">{{ nextOfKeen.relationshipToApplicant }}</h6>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <p class="font-weight-bold">Applicant</p>
+                <div *ngIf="nextOfKeen.applicant">
+                  <a [routerLink]="['/applicant', nextOfKeen.applicant?.id, 'view']">{{ nextOfKeen.applicant?.surname }}</a>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <p class="font-weight-bold">Address</p>
+                <div *ngIf="nextOfKeen.address">
+                  <a [routerLink]="['/address', nextOfKeen.address?.id, 'view']">{{ nextOfKeen.address?.city }}</a>
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-end mr-3 mb-3">
+              <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+              </button>
+
+              <button type="button" [routerLink]="['/next-of-keen', nextOfKeen.id, 'edit']" class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

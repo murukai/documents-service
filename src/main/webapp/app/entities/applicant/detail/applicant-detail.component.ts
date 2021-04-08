@@ -1,20 +1,16 @@
-import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IAppointmentSlot } from 'app/entities/appointment-slot/appointment-slot.model';
-import { AppointmentSlotService } from 'app/entities/appointment-slot/service/appointment-slot.service';
 import { IDeclaration } from 'app/entities/declaration/declaration.model';
-import { DeclarationService } from 'app/entities/declaration/service/declaration.service';
 import { IDemographicDetails } from 'app/entities/demographic-details/demographic-details.model';
-import { DemographicDetailsService } from 'app/entities/demographic-details/service/demographic-details.service';
 import { IGuardian } from 'app/entities/guardian/guardian.model';
-import { GuardianService } from 'app/entities/guardian/service/guardian.service';
 import { IMarriageDetails } from 'app/entities/marriage-details/marriage-details.model';
-import { MarriageDetailsService } from 'app/entities/marriage-details/service/marriage-details.service';
 import { INextOfKeen } from 'app/entities/next-of-keen/next-of-keen.model';
-import { NextOfKeenService } from 'app/entities/next-of-keen/service/next-of-keen.service';
 
 import { IApplicant } from '../applicant.model';
+import { ApplicantService } from 'app/entities/applicant/service/applicant.service';
+import { MaritalStatus } from 'app/entities/enumerations/marital-status.model';
+import { DataUtils } from 'app/core/util/data-util.service';
 
 @Component({
   selector: 'jhi-applicant-detail',
@@ -23,68 +19,57 @@ import { IApplicant } from '../applicant.model';
 })
 export class ApplicantDetailComponent implements OnInit {
   applicant: IApplicant | null = null;
-  democraphicDetails: IDemographicDetails | null = null;
+  demographicDetails: IDemographicDetails | null = null;
   declaration: IDeclaration | null = null;
   marriageDetails: IMarriageDetails | null = null;
   nextOfKeen: INextOfKeen | null = null;
   appointmentSlot: IAppointmentSlot | null = null;
   guardian: IGuardian | null = null;
 
-  constructor(
-    protected activatedRoute: ActivatedRoute,
-    protected declarationService: DeclarationService,
-    protected guardianService: GuardianService,
-    protected democraphicDetailsService: DemographicDetailsService,
-    protected marriageDetailsService: MarriageDetailsService,
-    protected nextOfKeenService: NextOfKeenService,
-    protected appointmentSlotService: AppointmentSlotService
-  ) {}
+  constructor(protected activatedRoute: ActivatedRoute, protected applicantService: ApplicantService, protected dataUtils: DataUtils) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ applicant }) => {
       this.applicant = applicant;
-      if (applicant.democraphicDetails) {
-        this.democraphicDetailsService
-          .find(applicant.democraphicDetails.id)
-          .subscribe((res: HttpResponse<IDemographicDetails>) => (this.democraphicDetails = res.body));
-      }
-      console.error('Found Demographic details id is ', applicant.democraphicDetails.id);
-      const declarationId = applicant.declaration.id;
-      console.error('The Applicant', applicant);
-      console.error('Declaration id is : {}', declarationId);
-      if (applicant.declaration) {
-        this.declarationService
-          .find(applicant.declaration.id)
-          .subscribe((res: HttpResponse<IDeclaration>) => (this.declaration = res.body));
-      }
-      const guardianId = applicant.guardian.id;
-      console.error('Guardian Id is ', guardianId);
-      if (applicant.guardian) {
-        this.guardianService.find(applicant.guardian.id).subscribe((res: HttpResponse<IGuardian>) => (this.guardian = res.body));
-      }
-
-      console.error('MarriageDetails is ', applicant.marriageDetails);
-      if (applicant.marriageDetails) {
-        this.marriageDetailsService
-          .find(applicant.marriageDetails.id)
-          .subscribe((res: HttpResponse<IMarriageDetails>) => (this.marriageDetails = res.body));
-      }
-      console.error('Next of Keen is ', applicant.nextOfKeen);
-      if (applicant.nextOfKeen) {
-        this.nextOfKeenService.find(applicant.nextOfKeen.id).subscribe((res: HttpResponse<INextOfKeen>) => (this.nextOfKeen = res.body));
-      }
-
-      const appointmentSlotId = applicant.appointmentSlot.id;
-      console.error('Appointment Slot id is ', appointmentSlotId);
-      if (applicant.appointmentSlot.id) {
-        this.appointmentSlotService
-          .find(applicant.appointmentSlot.id)
-          .subscribe((res: HttpResponse<IAppointmentSlot>) => (this.appointmentSlot = res.body));
-      }
-      console.error('Appointment slot is ', this.appointmentSlot);
     });
+    console.error(this.applicant);
+    /**
+     * Finding dependencies for applicant
+     */
+
+    if (this.applicant?.id) {
+      /**
+       * NextOfKeen
+       */
+      this.applicantService.findNextOfKeen(this.applicant.id).subscribe(res => (this.nextOfKeen = res.body));
+      /**
+       * MarriageDetails
+       */
+      if (this.applicant.maritalStatus === MaritalStatus.MARRIED) {
+        this.applicantService.findMarriageDetails(this.applicant.id).subscribe(res => (this.marriageDetails = res.body));
+      }
+      /**
+       * Guardian
+       */
+      this.applicantService.findGuardian(this.applicant.id).subscribe(res => (this.guardian = res.body));
+      /**
+       * Declaration
+       */
+      this.applicantService.findDeclaration(this.applicant.id).subscribe(res => (this.declaration = res.body));
+      /**
+       * DemographicsDetails
+       */
+      this.applicantService.findDemographicDetails(this.applicant.id).subscribe(res => (this.demographicDetails = res.body));
+    }
   }
 
+  byteSize(base64String: string): string {
+    return this.dataUtils.byteSize(base64String);
+  }
+
+  openFile(base64String: string, contentType: string | null | undefined): void {
+    this.dataUtils.openFile(base64String, contentType);
+  }
   previousState(): void {
     window.history.back();
   }

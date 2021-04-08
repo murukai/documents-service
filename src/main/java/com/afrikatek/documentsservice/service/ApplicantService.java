@@ -130,4 +130,10 @@ public class ApplicantService {
         log.debug("Request to delete Applicant : {}", id);
         applicantRepository.deleteById(id);
     }
+
+    @Transactional(readOnly = true)
+    public Page<ApplicantDTO> findByUser(Pageable pageable) {
+        log.debug("Requests for applicants of a specific user");
+        return applicantRepository.findByUserIsCurrentUser(pageable).map(applicantMapper::toDto);
+    }
 }

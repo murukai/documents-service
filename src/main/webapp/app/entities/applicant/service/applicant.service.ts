@@ -9,6 +9,11 @@ import { DATE_FORMAT } from 'app/config/input.constants';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IApplicant, getApplicantIdentifier } from '../applicant.model';
+import { INextOfKeen } from 'app/entities/next-of-keen/next-of-keen.model';
+import { IMarriageDetails } from 'app/entities/marriage-details/marriage-details.model';
+import { IGuardian } from 'app/entities/guardian/guardian.model';
+import { IDemographicDetails } from 'app/entities/demographic-details/demographic-details.model';
+import { IDeclaration } from 'app/entities/declaration/declaration.model';
 
 export type EntityResponseType = HttpResponse<IApplicant>;
 export type EntityArrayResponseType = HttpResponse<IApplicant[]>;
@@ -44,6 +49,29 @@ export class ApplicantService {
     return this.http
       .get<IApplicant>(`${this.resourceUrl}/${id}`, { observe: 'response' })
       .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  // added endpoints to query the database on the values that make up an applicant
+  findNextOfKeen(id: number): Observable<EntityResponseType> {
+    return this.http.get<INextOfKeen>(`${this.resourceUrl}/${id}/next-of-keen`, { observe: 'response' });
+  }
+
+  findMarriageDetails(id: number): Observable<EntityResponseType> {
+    return this.http
+      .get<IMarriageDetails>(`${this.resourceUrl}/${id}/marriage-details`, { observe: 'response' })
+      .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
+  }
+
+  findGuardian(id: number): Observable<EntityResponseType> {
+    return this.http.get<IGuardian>(`${this.resourceUrl}/${id}/guardian`, { observe: 'response' });
+  }
+
+  findDemographicDetails(id: number): Observable<EntityResponseType> {
+    return this.http.get<IDemographicDetails>(`${this.resourceUrl}/${id}/demographic-details`, { observe: 'response' });
+  }
+
+  findDeclaration(id: number): Observable<EntityResponseType> {
+    return this.http.get<IDeclaration>(`${this.resourceUrl}/${id}/declaration`, { observe: 'response' });
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {

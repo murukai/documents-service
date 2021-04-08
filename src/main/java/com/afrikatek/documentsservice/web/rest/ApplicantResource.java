@@ -1,6 +1,8 @@
 package com.afrikatek.documentsservice.web.rest;
 
 import com.afrikatek.documentsservice.repository.ApplicantRepository;
+import com.afrikatek.documentsservice.security.AuthoritiesConstants;
+import com.afrikatek.documentsservice.security.SecurityUtils;
 import com.afrikatek.documentsservice.service.ApplicantService;
 import com.afrikatek.documentsservice.service.DeclarationService;
 import com.afrikatek.documentsservice.service.DemographicDetailsService;
@@ -198,6 +200,9 @@ public class ApplicantResource {
         }
         log.debug("REST request to get a page of Applicants");
         Page<ApplicantDTO> page = applicantService.findAll(pageable);
+        if (!SecurityUtils.hasCurrentUserThisAuthority(AuthoritiesConstants.ADMIN)) {
+            page = applicantService.findByUser(pageable);
+        }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

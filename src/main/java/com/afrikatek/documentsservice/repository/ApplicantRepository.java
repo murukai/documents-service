@@ -2,6 +2,8 @@ package com.afrikatek.documentsservice.repository;
 
 import com.afrikatek.documentsservice.domain.Applicant;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -12,5 +14,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ApplicantRepository extends JpaRepository<Applicant, Long> {
     @Query("select applicant from Applicant applicant where applicant.user.login = ?#{principal.username}")
-    List<Applicant> findByUserIsCurrentUser();
+    Page<Applicant> findByUserIsCurrentUser(Pageable pageable);
 }
